@@ -70,3 +70,50 @@ console.log(varVariable);
  const interestRate=0.3;
  //interestRate=1; give error using const for value does not change further
  console.log(interestRate);
+
+ //Operators
+ //1.Arithmetic 
+
+ var a =100;
+ var b=10;
+ console.log("The value of a+b is :",  a+b);
+ console.log("The value of a-b is :",  a-b);
+ console.log("The value of a*b is :",  a*b);
+ console.log("The value of a/b is :",  a/b);
+
+ //2.Assignment
+
+ var c=b;
+ c+=2;
+ c-=2;//c=c-2;
+ c*=2;
+ c/=2;
+ console.log(c);
+
+//Comparison 
+
+var x=34;
+var y=20;
+console.log(x == y);
+console.log(x >= y);
+console.log(x <= y);
+console.log(x != y);
+console.log(x < y);
+console.log(x > y);
+
+//Logical
+//1.And
+console.log(true && true);
+console.log(true && false);
+console.log(false && true);
+console.log(false && false);
+
+//2.Or
+console.log(true || true);
+console.log(true || false);
+console.log(false || true);
+console.log(false || false);
+
+//3.  Not
+console.log(!false);
+console.log(!true);
