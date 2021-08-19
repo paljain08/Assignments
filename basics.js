@@ -45,4 +45,28 @@ console.log(typeof true);
  let num=20;
  console.log(num);
 
- 
+ //let,var and const
+
+ //1.var :The scope of var variable outside the block and within itself also.
+ if(true)
+ {
+     var varVariable='This is true';
+ }
+ console.log(varVariable);
+
+ //var variable declared as many times but in case of let its opposite
+var varVariable='hello';
+console.log(varVariable);
+
+ //2. let : the scope of the let variable within the block only
+
+ if(true)
+ {
+     let letVariable="hi";
+     console.log(letVariable);
+ }
+
+ //3.const
+ const interestRate=0.3;
+ //interestRate=1; give error using const for value does not change further
+ console.log(interestRate);
