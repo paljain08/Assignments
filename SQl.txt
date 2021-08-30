@@ -1,0 +1,408 @@
+
+1.Tables Create 
+
+CREATE TABLE project
+(
+	project_id SERIAL PRIMARY KEY,
+	project_title VARCHAR(50) NOT NULL,
+	logo VARCHAR(100),
+	description VARCHAR(200) NOT NULL,
+	isdeleted boolean,
+	createdat timestamp,
+	createdby text NOT NULL,
+	deletedat timestamp,
+	deletedby text
+	
+);
+
+CREATE TABLE modules
+(
+	module_id SERIAL PRIMARY KEY,
+	module_title VARCHAR(50) NOT NULL,
+	project_name VARCHAR(50) NOT NULL,
+	description VARCHAR(200) UNIQUE,
+	isdeleted boolean,
+	createdat timestamp,
+	createdby text NOT NULL,
+	deletedat timestamp,
+	deletedby text,
+	project_id INT REFERENCES project(project_id) 
+);
+
+CREATE TABLE api
+(
+	api_id SERIAL PRIMARY KEY,
+	url TEXT NOT NULL,
+	api_title VARCHAR(50) NOT NULL,
+	method_name VARCHAR(30) NOT NULL,
+	response VARCHAR(50) NOT NULL,
+	request VARCHAR(50) NOT NULL,
+	description VARCHAR(200) UNIQUE,
+	project_name VARCHAR(50) NOT NULL,
+	isdeleted boolean,
+	createdat timestamp,
+	createdby text NOT NULL,
+	deletedat timestamp,
+	deletedby text,
+	module_id INT REFERENCES modules (module_id)
+);
+
+CREATE TABLE users
+(
+	user_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	gender VARCHAR(9),
+	profile_pic VARCHAR(100) NOT NULL,
+	check(gender in ('Male','Female','Others')),
+	isdeleted boolean,
+	createdat timestamp,
+	createdby text NOT NULL,
+	deletedat timestamp,
+	deletedby text 
+);
+
+CREATE TABLE user_project
+(
+	userproject_id SERIAL PRIMARY KEY,
+	project_id INT REFERENCES project(project_id),
+	user_id INT REFERENCES users(user_id),
+	isdeleted boolean,
+	createdat timestamp,
+	createdby text NOT NULL,
+	deletedat timestamp,
+	deletedby text 
+);
+
+CREATE TABLE user_address
+(
+	useradd_id SERIAL PRIMARY KEY,
+	zip CHAR(6) NOT NULL,
+	city VARCHAR(20) NOT NULL,
+	state_name VARCHAR(20) NOT NULL,
+	country VARCHAR(20) NOT NULL,
+	address1 VARCHAR(50) UNIQUE,
+	address2 VARCHAR(50) UNIQUE,
+	isdeleted boolean,
+	createdat timestamp,
+	createdby text NOT NULL,
+	deletedat timestamp,
+	deletedby text,
+	user_id INT REFERENCES users(user_id)
+);
+
+
+--Select * from api;
+--Select * from user_address;
+--Select * from user_project;
+--Select * from users;
+--Select * from project;
+--Select * from modules;
+
+2.Insert Records
+--Project Table
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby)
+VALUES ('Pg Accommodation','C:\Users\Pallavi Jain\Pictures\img1.jpg','Admin can handle all the details of students pg'
+,FALSE,'2001-09-28 23:00','Pallavi Jain');
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Manobhandan Metrimonial','C:\Users\Pallavi Jain\Pictures\img2.jpg','Admin can handle all the details related to 
+groom and bride and their personal details',TRUE,'2002-09-28 23:00','Amitesh','2002-10-28 13:00','Amitesh');
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Fitness Club Management System','C:\Users\Pallavi Jain\Pictures\img3.jpg','This project aims to automate gym and fitness admission
+ process as the admission process in gyms and selecting a trainer is difficult',TRUE,'2003-09-28 23:00','Pallavi Jain','2003-10-28 13:00','Snehal');
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby)
+VALUES ('Online Fashion Stylist Website','C:\Users\Pallavi Jain\Pictures\img4.jpg',' This system will connect the users & the fashion stylists. 
+The users can view the stylists’ profiles.',FALSE,'2004-09-28 23:00','Pallavi Jain');
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Workflow Management System for MNC','C:\Users\Pallavi Jain\Pictures\img5.jpg','This project is very helpful for manage employee’s workload
+ it consists of employee working details, project completion details.',TRUE,'2005-09-28 23:00','Rupali','2005-10-28 20:00','Rupali');
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby)
+VALUES ('Customer Targeted E-Commerce','C:\Users\Pallavi Jain\Pictures\img6.jpg','Customer get many benefits via online shopping this helps 
+e-commerce companies to build long-lasting and profitable relationship with their customers.',FALSE,'2006-09-28 23:00','Hussain');
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Web Filtering Software','C:\Users\Pallavi Jain\Pictures\img7.jpg','Along with the ever-growing Web there comes the need of restricting
+ content gaming sites in colleges and in corporate sectors',TRUE,'2007-09-28 23:00','Kanchan','2007-10-28 13:00','Surbhi');
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby)
+VALUES ('Banking Bot Project','C:\Users\Pallavi Jain\Pictures\img8.jpg',' The system is designed for banks use where users can ask any bank related 
+questions like loan, account, policy etc.',FALSE,'2008-09-28 23:00','Pallavi Jain');
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Smart Health Consulting Project','C:\Users\Pallavi Jain\Pictures\img9.jpg','The system user must register as
+ a member of this system and keep updating his medical history.',FALSE,'2009-09-28 23:00','Prajakta','2009-10-28 13:00','Riya');
+
+INSERT INTO project(project_title,logo,description,isdeleted,createdat,createdby)
+VALUES ('Online Pizza Ordering System','C:\Users\Pallavi Jain\Pictures\img10.jpg','This system would be much more comfortable 
+for the customers to have an online pizza ordering system.',FALSE,'20010-09-28 23:00','Pratik');
+
+
+--Module table
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby)
+VALUES (1,'Admin Module','Pg Accommodation','Admin can see all details in brief like total state,total city,
+total owner and total pg',FALSE,'2001-09-28 23:00','Pallavi Jain');
+
+INSERT INTO modules(module_title,project_name,description,isdeleted,createdat,createdby,project_id)
+VALUES ('PG Owner Module','Pg Accommodation','Owner can see all details in brief like total listed pg,
+total booking,total new booking ,total confirmed and canceled booking',FALSE,'2001-09-28 23:00','Pallavi Jain',1);
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (2,'Expectation Module','Manobhandan Metrimonial','Expectation module contains the particulars that the 
+grooms/pride expects from their partner such as qualifications,salary etc.',TRUE,'2002-09-28 23:00','Pooja','2002-09-28 23:00','Rakshanda');
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby)
+VALUES (3,'Trainer','Fitness Club Management System','Trainer can login using credentials.Trainer can mark 
+attendance of the members.',FALSE,'2003-09-28 23:00','Amitseh');
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (4,'Admin','PHD information system','Admin can handle all the details of pg',TRUE,'2004-09-28 23:00','Surbhi','2004-09-28 24:00','Pallavi');
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby)
+VALUES (5,'Principal Module','Workflow Management System for MNC','Principal can add new faculty details and create their
+ login credentials.',FALSE,'2005-09-28 23:00','Mokshi');
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby)
+VALUES (6,'Staff Module','Movie Rental Website','Staff module can add the new rental movies and view 
+the list of movies and customers',FALSE,'2006-09-28 23:00','Akshit');
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (7,'Rent a bike module','Bike portal','In this module user have authority to rent their bike',TRUE,'2007-09-28 23:00','Pallavi Jain','2007-09-28 24:00','Rohan');
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (8,'User Module','Banking Bot Project',' Users may register on the system and see various helping pages of 
+baking bot help',TRUE,'2008-09-28 23:00','Vishal','2009-09-28 24:00','Rohan');
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby)
+VALUES (9,'User Module','Smart Health Consulting Project','Patient Login to the application using his 
+ID and Password.',FALSE,'2009-09-28 23:00','Pallavi Jain');
+
+INSERT INTO modules(project_id,module_title,project_name,description,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (10,'Admin Module','Online Pizza Ordering System','Add different types of pizza’s in veg and 
+non-veg category',TRUE,'2010-09-28 23:00','Ashish','2011-09-28 24:00','Rohan');
+
+
+
+--User Module
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Pallavi','Jain','pallavij934@gmail.com','Female','C:\Users\Pallavi Jain\Pictures\img1.jpg',TRUE,'2001-09-28 23:00','Ashish','2011-09-28 24:00','Rohan');
+
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby)
+VALUES ('Amitesh','Kumar','amiteshkumar@gmail.com','Male','C:\Users\Pallavi Jain\Pictures\img2.jpg',FALSE,'2003-09-28 23:00','Rupali');
+
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Hussain','Raunak','hussain12@gmail.com','Female','C:\Users\Pallavi Jain\Pictures\img3.jpg',TRUE,'2005-09-28 23:00','Rahul','2011-09-28 24:00','Rohan');
+
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby)
+VALUES ('Rupali','Jain','rupali123@gmail.com','Female','C:\Users\Pallavi Jain\Pictures\img4.jpg',FALSE,'2001-09-28 23:00','Ashish');
+
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Pratik','Kumar','pratik@gmail.com','Female','C:\Users\Pallavi Jain\Pictures\img5.jpg',TRUE,'2009-09-28 23:00','Ashish','2010-09-28 24:00','Rohan');
+
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby)
+VALUES ('Prajakta','Patil','prajakta@gmail.com','Female','C:\Users\Pallavi Jain\Pictures\img6.jpg',FALSE,'2006-09-28 23:00','Ashish');
+
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Kanchan','Kumari','kanchan@gmail.com','Female','C:\Users\Pallavi Jain\Pictures\img7.jpg',TRUE,'2007-09-28 23:00','Vijay','2012-09-28 24:00','Rohan');
+
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby)
+VALUES ('Riya','Vij','riya@gmail.com','Female','C:\Users\Pallavi Jain\Pictures\img8.jpg',False,'2001-09-28 23:00','Ashish');
+
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES ('Surbhi','Vishwakarma','surbhi@gmail.com','Female','C:\Users\Pallavi Jain\Pictures\img9.jpg',TRUE,'2004-09-28 23:00','Ashish','2011-09-28 24:00','Rohan');
+
+INSERT INTO users(first_name,last_name,email,gender,profile_pic,isdeleted,createdat,createdby)
+VALUES ('Vishal','Chaudhary','vishu12@gmail.com','Female','C:\Users\Pallavi Jain\Pictures\img10.jpg',False,'2002-09-28 23:00','Ashish');
+
+
+
+--User_Address
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (141003,'Ludhiana','Punjab','India','H.No-497 Vijay inder nagar jain colony','H.No-308 Kichlu Nagar',TRUE,'2002-09-28 23:00','Ashish','2011-09-28 24:00','Rohan');
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby)
+VALUES (411021,'Pune','Maharashtra','India','Swayam Siddha Housing Society Kothrud','Sai Integrate Near Marigold Banquet Bavdhan',FALSE,'2002-09-28 23:00','Akshit');
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (767688,'Mumbai','Maharashtra','India','H.No-307 b-wing baner','Navy Nagar',False,'2002-09-28 23:00','Neha','2011-09-28 24:00','Prince');
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby)
+VALUES (554656,'Lucknow','Uttar Pradesh','India','Netaji Nagar','Opera House',False,'2002-09-28 23:00','Ashish');
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (255577,'Kanpur','Uttar Pradesh','India','Rajendra Nagar','Raoli Camp',False,'2009-09-28 23:00','Vishal','2011-09-28 24:00','Pooja');
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby)
+VALUES (145566,'Jaipur','Rajasthan','India','RBI Town Hall','SV Road',FALSE,'2002-09-28 23:00','Ashish');
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (141272,'Thane','Maharashtra','India','Senapati Bapat Marg','Shivaji Nagar (Kurla)',TRUE,'2002-09-28 23:00','Prajakta','2011-09-28 24:00','Rohan');
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby)
+VALUES (217688,'Patna','Bihar','India','Shivaji Park','Sai Velocity',False,'2002-09-28 23:00','Nupur');
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (190001,'Surat','Gujarat','India','Tank Road','Thakurdwar',TRUE,'2002-09-28 23:00','Ishan','2011-09-28 24:00','Rohan');
+
+INSERT INTO user_address(zip,city,state_name,country,address1,address2,isdeleted,createdat,createdby)
+VALUES (141081,'Amritsar','Punjab','India','Vihar Road','Vikhroli',False,'2002-09-28 23:00','Surbhi');
+
+
+--User_Project
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby)
+VALUES (1,1,False,'2002-09-28 23:00','Surbhi');
+
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (2,2,True,'2002-09-28 23:00','Prince','2011-09-28 24:00','Bhuvi');
+
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby)
+VALUES (3,3,True,'2004-09-28 23:00','Nupur');
+
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (4,4,True,'2005-09-28 23:00','Riya','2006-09-28 24:00','Rohan');
+
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby)
+VALUES (5,5,True,'2007-09-28 23:00','Rupali');
+
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (6,6,True,'2008-09-28 23:00','Ashish','2009-09-28 24:00','Rohit');
+
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby)
+VALUES (7,7,True,'2010-09-28 23:00','Pooja');
+
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (8,8,True,'2000-09-28 23:00','Akshit','2001-09-28 24:00','Vishal');
+
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby)
+VALUES (9,9,True,'2011-09-28 23:00','Nupur');
+
+INSERT INTO user_project(user_id,project_id,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (10,10,True,'2012-09-28 23:00','Shivali','20011-09-28 24:00','Neha');
+
+
+
+--Api Module
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (1,'https://www.Pg Accommodation.com/Admin/Dashboard','Handle Admin','Get','Response Headers','Request Headers','Fetch the details from database',
+'Pg Accommodation',TRUE,'2001-09-28 23:00','Ashish','2002-09-28 24:00','Rohan');
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby)
+VALUES (2,'https://www.Manobhandan Metrimonial.com/Expectation Module/Dashboard','Handle Expectation','Get','Response Headers','Request Headers','Fetching the details
+ from the database','Manobhandan Metrimonial',FALSE,'2003-09-28 23:00','Surbhi');
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (3,'https://www.Fitness Club Management System.com/Trainer/Dashboard','Handle Trainer','Update','Response Headers','Request Headers','Update the details from database',
+'Fitness Club Management System',TRUE,'2003-09-28 23:00','Akshit','2004-09-28 24:00','Rohit');
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (4,'https://www.PHD information system.com/Admin/Dashboard','Handle Admin','Update','Response Headers','Request Headers','Update records from database',
+'PHD information system',TRUE,'2001-09-28 23:00','Ashish','2002-09-28 24:00','Rohan');
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (5,'https://www.Workflow Management System for MNC.com/Principle/Dashboard','Handle Priciple','Get','Response Headers','Request Headers','Fetch the records from database',
+'Workflow Management System for MNC',TRUE,'2001-09-28 23:00','Ashish','2002-09-28 24:00','Rohan');
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby)
+VALUES (6,'https://www.Movie Rental Website.com/Staff/Dashboard','Handle Staff','Get','Response Headers','Request Headers','Fetch the records',
+'Movie Rental Website',TRUE,'2001-09-28 23:00','Ashish');
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (7,'https://www.Bike portal.com/Rent Bike/Dashboard','Handle Rent Bike','Post','Response Headers','Request Headers','Insert data in database',
+'Bike portal',TRUE,'2001-09-28 23:00','Ashish','2002-09-28 24:00','Rohan');
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (8,'https://www.Banking Bot Project.com/User/Dashboard','Handle User','Post','Response Headers','Request Headers','Inserting data',
+'Banking Bot Project',TRUE,'2001-09-28 23:00','Ashish','2002-09-28 24:00','Rohan');
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (9,'https://www.Smart Health Consulting Project.com/User/Dashboard','Handle User','Get','Response Headers','Request Headers','Fetch records',
+'Smart Health Consulting Project',TRUE,'2001-09-28 23:00','Ashish','2002-09-28 24:00','Rohan');
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (10,'https://www.Online Pizza Ordering System.com/Admin/Dashboard','Handle Admin','Delete','
+Response Headers','Request Headers','Delete records from database',
+'Online Pizza Ordering System',TRUE,'2001-09-28 23:00','Ashish','2002-09-28 24:00','Rohan');
+
+
+INSERT INTO api(module_id,url,api_title,method_name,response,request,description,project_name,isdeleted,createdat,createdby,deletedat,deletedby)
+VALUES (11,'https://www.Online Pizza Ordering System.com/Admin/Dashboard','Handle Admin','Put','Response Headers','Request Headers','Insert records in database',
+'Online Pizza Ordering System',TRUE,'2001-09-28 23:00','Ashish','2002-09-28 24:00','Rohan');
+
+
+6.Select project_title from project;
+
+7.Select module_title  from modules;
+
+8.Select first_name,last_name  from users;
+
+9.Select address1  from user_address;
+
+10.Select api_title  from api;
+
+11..SELECT project.project_title, modules.module_title,api.api_title
+FROM project, modules,api
+WHERE project.project_id= modules.module_id 
+AND project.project_id = api.api_id;
+
+12..Select api_title,project_name from api;
+
+13..(1)SELECT modules.module_title,count(api.api_title)
+FROM project  Join modules  on project.project_id=modules.project_id
+Join api  on modules.module_id=api.module_id group by modules.module_title;
+
+13..(2)SELECT m.module_title,count(a.api_title)
+FROM project p Join modules m on p.project_id=m.project_id
+Join api a on m.module_id=a.module_id group by m.module_title;
+
+14..SELECT project.project_title,count(api.api_title)
+FROM project  Join modules  on project.project_id=modules.project_id
+Join api  on modules.module_id=api.module_id 
+group by project.project_title;
+
+
+15..SELECT users.first_name,user_address.address1,user_address.address2
+FROM users,user_address WHERE users.user_id=user_address.useradd_id; 
+
+16.SELECT project.project_title from project
+Join user_project on user_project.project_id=project.project_id
+Join users on users.user_id=user_project.user_id
+where users.first_name='Pallavi';
+
+17..SELECT project_title from project where project_title like 'W%';
+
+19..SELECT users.user_id,users.first_name,users.last_name,
+  user_address.country from users
+ Join user_address ON user_address.user_id=users.user_id
+ WHERE country='India';
+
+Syntax Error
+
+20..Select users.user_id,users.first_name,users.last_name,user_address.zip
+FROM users Join user_address ON users.user_id=user_address.user_id
+where zip='141003';
+
+21..SELECT api_title from api where method_name='Post';
+
+22..SELECT api_title from api where method_name='Put';
+
+23..SELECT api_title from api where method_name='Delete';
+
+24..SELECT api_title from api where method_name='Get';
+
+25..SELECT api.api_title From modules 
+    JOIN api ON modules.module_id=api.module_id
+    where modules.module_title='Admin Module';
+
+
+26..SELECT modules.module_title From modules 
+    JOIN api ON modules.module_id=project.project_id
+    where project.project_title='Pg Accommodation';
