@@ -1,0 +1,41 @@
+//If Statment
+
+var mySal = 1000;
+var yourSal = 500;
+
+if( mySal > yourSal)
+{
+    alert("My Salary is greater than your salary");
+}
+
+//else Statement
+
+var mySal = 500;
+var yourSal = 1000;
+
+if( mySal > yourSal)
+{
+    alert("My Salary is greater than your salary");
+}
+else
+{
+    alert("My Salary is less than or equal to your salary");
+}
+
+//Mulptiple if else condition
+
+var mySal = 500;
+var yourSal = 1000;
+
+if( mySal > yourSal)
+{
+    alert("My Salary is greater than your salary");
+}
+else if(mySal < yourSal)
+{
+    alert("My Salary is less than your salary");
+}
+else if(mySal == yourSal)
+{
+    alert("My Salary is equal to your salary");
+}

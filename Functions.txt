@@ -1,0 +1,99 @@
+//Functions
+//1.Define and call function
+
+function ShowMessage()
+{
+    alert("Hello World!");
+}
+
+ShowMessage();
+
+//2.Function Parameters
+function ShowMessage(firstName, lastName) 
+{
+	alert("Hello " + firstName + " " + lastName);
+}
+
+ShowMessage("Steve", "Jobs");
+ShowMessage("Bill", "Gates");
+ShowMessage(100, 200);
+
+//3. Argument Objects
+
+function ShowMessage()
+{
+    alert("Hello " + arguments[0] + " " + arguments[1]);
+}
+
+ShowMessage("Steve", "Jobs");
+
+//4.Iterate all arguments
+function ShowMessage()
+{
+   for(var i = 0; i < arguments.length; i++)
+   {
+        alert(arguments[i]);
+   }
+}
+
+ShowMessage("Steve", "Jobs");
+
+//5.Return value from a function
+
+function Sum(val1, val2) 
+{
+    return val1 + val2;
+};
+
+var result = Sum(10,20); 
+
+function Multiply(val1, val2) 
+{
+    console.log( val1 * val2);
+};
+
+result = Multiply(10,20); 
+
+Output:
+30
+undefined
+
+
+//6.Function Returning a Function
+
+function multiple(x) 
+{
+
+    function fn(y)
+    {
+        return x * y;
+    }
+    
+    return fn;
+}
+
+var triple = multiple(3);
+triple(2);
+triple(3);
+
+Output:
+6
+9
+
+//7.Anonymous Function
+
+var showMessage = function ()
+{
+    alert("Hello World!");
+};
+
+showMessage();
+
+var sayHello = function (firstName) 
+{
+    alert("Hello " + firstName);
+};
+
+showMessage();
+
+sayHello("Bill"); 
